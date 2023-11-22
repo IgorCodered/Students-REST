@@ -2,7 +2,6 @@ package ru.studentproject.crud.springstudents.model;
 
 import lombok.Builder;
 import lombok.Data;
-import lombok.NonNull;
 
 import java.time.LocalDate;
 
@@ -12,9 +11,6 @@ public class Student {
     private String firstName;
     private String lastName;
     private LocalDate dateOfBirth;
-
-    @NonNull
     private String email;
-
     private int age;
 }
