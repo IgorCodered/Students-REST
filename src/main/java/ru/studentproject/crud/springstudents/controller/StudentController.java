@@ -1,21 +1,39 @@
 package ru.studentproject.crud.springstudents.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import lombok.AllArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 import ru.studentproject.crud.springstudents.model.Student;
+import ru.studentproject.crud.springstudents.service.StudentService;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/students")
+@AllArgsConstructor
 public class StudentController {
+    @NonNull
+    private final StudentService service;
     @GetMapping()
     public List<Student> findAllStudents() {
-        return List.of(
-                Student.builder().firstName("Олег").lastName("Елесин").email("olegelesin1996@mail.ru").age(50).build(),
-                Student.builder().firstName("Марина").lastName("Цветаева").email("marinaemail@hotmail.com").age(20).build(),
-                Student.builder().firstName("Крэк").lastName("Ламоткин").email("crackLobanov@yahoo.ru").age(34).build()
-        );
+        return service.findAllStudents();
+    }
+    @PostMapping("/save_student")
+    public Student saveStudent(@RequestBody Student student) {
+        return service.saveStudent(student);
+    }
+    @GetMapping("/{email}")
+    public Student findByEmail(@PathVariable String email) {
+        return service.findByEmail(email);
+    }
+    @PutMapping("update_student")
+    public Student updateStudent(Student student) {
+        return service.updateStudent(student);
+    }
+    @DeleteMapping("delete_student/{email}")
+    public void deleteStudent(@PathVariable String email) {
+        service.deleteStudent(email);
     }
 }
